@@ -13,15 +13,13 @@ async function startServer() {
 
   app.use(express.json());
 
-  // Initialize Gemini safely with the API key and recommended User-Agent header
-  // Using the robust gemini-3.5-flash as default as instructed in the guidelines
+  // Initialize Gemini with the API key
+  // Using gemini-3.5-flash as default model
   const apiKey = process.env.GEMINI_API_KEY;
   const ai = new GoogleGenAI({
     apiKey: apiKey || "",
     httpOptions: {
-      headers: {
-        'User-Agent': 'aistudio-build',
-      },
+      headers: {},
     },
   });
 
@@ -42,7 +40,7 @@ async function startServer() {
 
       if (!apiKey) {
         return res.status(500).json({
-          error: "API key is not configured. Please add GEMINI_API_KEY in the Secrets panel."
+          error: "API key is not configured. Please add GEMINI_API_KEY in .env.local."
         });
       }
 
